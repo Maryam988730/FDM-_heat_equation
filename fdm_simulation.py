@@ -23,8 +23,21 @@ u[-1,:] = 20
 u[:,0] = 20
 u[:,-1] = 20
 
+fig, ax = plt.subplots()
+im = ax.imshow(u, cmap='inferno', vmin=0, vmax=100, origin='lower')
+
+ax.set_title("Temperature Distribution in a Cooling Plate")
+ax.set_xlabel("x-position (mm)")
+ax.set_ylabel("y-position (mm)")
+
+cbar = plt.colorbar(im, ax=ax)
+cbar.set_label("Temperature (°C)")
+
+
+
 #simulate 
 counter = 0
+title = ax.set_title(f"Temperature Distribution\nTime = {counter:.2f} s")
 while counter < time :
     #copy because we want to use temp from the previous time step, not the updates ones
     w = u.copy()
@@ -33,5 +46,13 @@ while counter < time :
             u[i,j] = w[i,j] + a*dt* ((w[i+1, j] - 2*w[i, j] + w[i-1, j]) / dx**2 + (w[i, j+1] - 2*w[i, j] + w[i, j-1]) / dy**2)
 
     counter += dt
+    title.set_text(f"Temperature Distribution\nTime = {counter:.2f} s")
+
+    #dynamic update
+    im.set_data(u)
+    plt.pause(0.01)
 
 
+
+#plot 
+plt.show()
