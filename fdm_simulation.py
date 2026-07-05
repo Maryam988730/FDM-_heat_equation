@@ -23,6 +23,8 @@ u[-1,:] = 20
 u[:,0] = 20
 u[:,-1] = 20
 
+
+#plot
 fig, ax = plt.subplots()
 im = ax.imshow(u, cmap='inferno', vmin=0, vmax=100, origin='lower')
 
